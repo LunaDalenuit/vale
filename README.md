@@ -29,9 +29,10 @@ Required build tools:
 * Any GNU/Linux system.
 * Python 3.14 `python3`
 * GNU C Compiler `gcc`
+* Netwide Assembler `nasm`
 * GNU Linker `ld`
 * Xorriso `xorriso`
-* Limine 11 `limine`
+* Limine 12 `limine`
 
 Optionally:
 
