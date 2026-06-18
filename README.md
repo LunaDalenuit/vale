@@ -10,7 +10,7 @@ Vale is an independant operating system with no current intentions of replacing 
 
 ## License
 
-    Copyright (C) 2026  Aerilyn Vale and contributers.
+    Copyright (C) 2026  Luna Dalenuit and contributers.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

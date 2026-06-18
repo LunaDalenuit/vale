@@ -33,7 +33,7 @@ void _start(void) {
 
     printf("Welcome to Vale ", 0xFFFFFF);
     printf("0.1.0-alpha.1!\n", 0xFFFFFF);
-    printf("Copyright (c) 2026 Aerilyn Vale and contributers, ", 0xCC00DD);
+    printf("Copyright (c) 2026 Luna Dalenuit and contributers, ", 0xCC00DD);
     printf("GNU General Public License v3.0-or-later.\n", 0xFF2200);
 
 
