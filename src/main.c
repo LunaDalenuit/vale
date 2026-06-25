@@ -8,6 +8,9 @@
 */
 #if defined(__x86_64__)
     #include "arch/x86_64/gdt.h"
+    #include "arch/x86_64/idt.h"
+    #include "arch/x86_64/pic.h"
+    #include "arch/x86_64/pit.h"
 #else
     #error "Unsupported architecture. Compile for x86_64."
 #endif
@@ -17,13 +20,32 @@
 #include "drivers/memory/heap.h"
 #include "drivers/fb.h"
 
+static inline uint8_t inb(uint16_t port) {
+    uint8_t ret;
+    __asm__ volatile("inb %1, %0" : "=a"(ret) : "Nd"(port));
+    return ret;
+}
+
+static void outb(uint16_t port, uint8_t val) {
+    __asm__ volatile ("outb %0, %1" :: "a"(val), "Nd"(port));
+}
+
 void _start(void) {
     __asm__ volatile("cli"); // disable interrupts; no idt yet
 
+    remap_pic(32, 40);
+
     init_gdt();
+    init_idt();
 
     init_fb(); // initialize framebuffer early for early logging
     clear(0x000000);
+
+    pit_init(100);
+
+    inb(0x60);
+
+    outb(0x21, 0xFC); // unmask irq0 & irq1 from PIC
 
     init_pmm();
     init_vmm();
@@ -36,27 +58,7 @@ void _start(void) {
     printf("Copyright (c) 2026 Luna Dalenuit and contributers, ", 0xCC00DD);
     printf("GNU General Public License v3.0-or-later.\n", 0xFF2200);
 
-
-    // heap testing
-    
-    for (int i = 0; i < 10000; i++) {
-        void *x = kmalloc(64);
-
-        if (!x) {
-            printf("alloc failed\n", 0xFF0000);
-            break;
-        }
-
-        ((char *)x)[0] = 0xAA;
-    }
-
-    void *x = kmalloc(1);
-
-    if (((uint64_t)x & 0xF) != 0) {
-        printf("bad alignment\n", 0xFF0000);
-    }
-
-    printf("If you see this, heap probably works. :3", 0x00FF00);
+    __asm__ volatile("sti"); // enable interrupts; idt setup, booting done :D
 
     for (;;) __asm__("hlt");
 }

@@ -134,6 +134,25 @@ void puts(const char *str, uint32_t color) {
     }
 }
 
+void print_hex64(uint64_t value, uint32_t color) {
+    char buf[17];
+
+    for (int i = 15; i >= 0; i--) {
+        uint8_t digit = value & 0xF;
+
+        buf[i] = digit < 10
+            ? '0' + digit
+            : 'A' + (digit - 10);
+
+        value >>= 4;
+    }
+
+    buf[16] = '\0';
+
+    puts("0x", color);
+    puts(buf, color);
+}
+
 static void print_num(int val, int base, uint32_t color) {
     char buf[32];
     int i = 0;
