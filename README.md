@@ -119,6 +119,6 @@ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION
 OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-As of April 7th, 2026, Limine has returned to GitHub.
+As of April 7th, 2026, Limine has returned to GitHub.  
 Please use this link to view the Limine Protocol:  
 <https://github.com/Limine-Bootloader/limine-protocol>

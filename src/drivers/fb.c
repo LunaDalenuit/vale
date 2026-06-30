@@ -2,11 +2,14 @@
 
 #include "fb.h"
 #include <stdarg.h>
+#include "../arch/x86_64/spinlock.h"
 
 #define FONT_WIDTH  8
 #define FONT_HEIGHT 16
 
 extern uint8_t _binary_font_bin_start[];
+
+extern spinlock_t fb_lock = SPINLOCK_INIT;
 
 __attribute__((used, section(".limine_requests")))
 volatile struct limine_framebuffer_request framebuffer_request = {
@@ -182,6 +185,8 @@ static void print_num(int val, int base, uint32_t color) {
 }
 
 void printf(const char *fmt, uint32_t color, ...) {
+    spin_lock(&fb_lock);
+
     va_list args;
     va_start(args, color);
 
@@ -217,4 +222,6 @@ void printf(const char *fmt, uint32_t color, ...) {
     }
 
     va_end(args);
+
+    spin_unlock(&fb_lock);
 }
